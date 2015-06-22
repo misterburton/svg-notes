@@ -1,6 +1,6 @@
 # SVG Notes
 
-#### Table of Contents:
+##### Table of Contents:
 
 <ul class="toc">
   <li>
@@ -35,14 +35,14 @@
 
 ## Preparing
 
-* Any names given layers / groups will be added into the SVG as an ID on that element (this does add file size)
-* When exporting SVG files, ensure the x & y positions are integer values (i.e. not 23.3px × 86.8px)
-* Crop the artboard around the image (in illustrator: `Object > Artboards > Fit to Artwork Bounds`)
+* Any names given layers / groups will be added into the SVG as an ID on that element (_note:_ this adds file size)
+* When exporting SVG files, ensure the x & y positions are integer values on the pixel grid (i.e. 23.0 x 87.0, not 23.3px × 86.8px)
+* Crop the artboard around the image (in Adobe Illustrator: `Object > Artboards > Fit to Artwork Bounds`)
 
 ## Optimizing
 
 * [SVGO GUI](https://github.com/svg/svgo-gui) is an easy to use, drag & drop GUI that optimizes SVG files by minimizing and stripping out unnecessary code. (_note:_ it does, however, remove layer names.)
-* For more options in a web-based tool, [Peter Collingridge’s SVG Editor](http://petercollingridge.appspot.com/svg-editor) is a phenomenal resource
+* For more options in a visual, web-based tool, [Peter Collingridge’s SVG Editor](http://petercollingridge.appspot.com/svg-editor) is a phenomenal resource
 * [Paid] Illustrator Plugin, [VectorScribe](http://www.astutegraphics.com/software/vectorscribe/), removes unnecessary points from your paths via its _Smart Remove Brush Tool_
 * Move path points to integer values on the pixel grid. (in illustrator, turn on `View > Pixel Preview` & zoom in)
 
@@ -181,11 +181,11 @@ The following code:
 }
 ~~~
 
-Produces the following result:
+Produces the below result:
 
 ![](SVGNotesImages/responsive-logo-variations.png)
 
-**How to Change per-breakpoint viewBox dimensions w/ JavaScript**
+**How to Change Per-breakpoint `viewBox` Dimensions w/ JavaScript**
 
 Listen for media query events & change viewBox size, accordingly:
 
@@ -215,7 +215,7 @@ function WidthChange(mq) {
 
 ## Styling
 
-**The following is a subset of all SVG presentation attributes that can be set using CSS:**
+The following is a subset of all SVG presentation attributes that can be set using CSS:
 
 * **Font properties:**
  * `font`
@@ -372,7 +372,7 @@ TweenLite.to("rect", 1, {rotation:360, transformOrigin:"center center"}); //keyw
 TweenLite.to("rect", 1, {rotation:360, transformOrigin:"50px 50px"}); //pixels
 ~~~
 
-**Note:** set `smoothOrigin:true` to remove unsightly jumps when the origin is transformed:
+_**Note:** set `smoothOrigin:true` to remove unsightly jumps when the origin is transformed:_
 
 ~~~js
 {rotation:"+=90", transformOrigin:"right top", smoothOrigin:true}
@@ -400,7 +400,7 @@ TweenLite.to("#rect", 1, {attr:{x:100, y:50, width:100, height:100}, ease:Linear
 
 Use percentage-based x/y transforms:
 
-**Note:** percentage-based transforms are not accounted for in the SVG spec, but do work w/ GSAP
+_**Note:** percentage-based transforms are not accounted for in the SVG spec, but do work w/ GSAP_
 
 ~~~js
 TweenLite.to(".box", 0.5, {x:"100%"})
@@ -551,17 +551,17 @@ Now, let’s break down the filter.
 
 The first operation done by the filter is to blur the object, through the `feGaussianBlur` filter.
 
-![](SVGNotesImages/article-step1-blur.gif)
+![Step 1](SVGNotesImages/article-step1-blur.gif)
 
 The next operation is a `feColorMatrix` filter. It is used in this case to increase the contrast of the alpha channel, which, combined with the blur, creates that blob effect:
 
-![](SVGNotesImages/article-step2-contrast.gif)
+![Step 2](SVGNotesImages/article-step2-contrast.gif)
 
 Finally, to make the contents visible, we draw the original graphics of the object over the effect we just made, using it as a mask as well. To achieve that, we use the `feComposite` filter with the `atop` operator:
 
-![](SVGNotesImages/article-step3-content.gif)
+![Step 3](SVGNotesImages/article-step3-content.gif)
 
-That's it. This filter can be _**quite resource intensive**_, so you should refrain from applying it to large areas.
+This filter can be _**quite resource intensive**_, so you should refrain from applying it to large areas.
 
 ## References
 
@@ -573,3 +573,5 @@ Notes compiled from the following excellent resources:
 * [A Few Different Ways To Use SVG Sprites In Animation](http://www.smashingmagazine.com/2015/03/17/different-ways-to-use-svg-sprites-in-animation/)
 * [Styling & Animating Scalable Vector Graphics with CSS](http://slides.com/sarasoueidan/styling-animating-svgs-with-css/)
 * [Creative Gooey Effects](http://tympanus.net/codrops/2015/03/10/creative-gooey-effects/)
+
+That's all, folks.
