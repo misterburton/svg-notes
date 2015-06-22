@@ -1,6 +1,35 @@
-[toc]
-
 # SVG Notes
+
+<ul class="toc">
+  <li>
+    <a href="#toc_1">Preparing</a>
+  </li>
+  <li>
+    <a href="#toc_2">Optimizing</a>
+  </li>
+  <li>
+    <a href="#toc_3">Implementation Options</a>
+  </li>
+  <li>
+    <a href="#toc_4">Responsive SVG</a>
+  </li>
+  <li>
+    <a href="#toc_5">Styling</a>
+  </li>
+  <li>
+    <a href="#toc_6">Animation Basics</a>
+  </li>
+  <li>
+    <a href="#toc_7">Animation Deep Dive using GSAP</a>
+  </li>
+  <li>
+    <a href="#toc_8">SVG Filters & Gooey Effects</a>
+  </li>
+  <li>
+    <a href="#toc_9">References</a>
+  </li>
+</ul>
+
 
 ## Preparing
 
@@ -20,7 +49,7 @@
 * SVGO comes in [command line flavor](https://github.com/svg/svgo) w/ many more options, as well.
 * Enable gzip compression for SVGs on your websites in the `.htaccess`file:
 
-```
+~~~apacheconf
 AddType image/svg+xml svg svgz
 <IfModule mod_deflate.c>
     <IfModule mod_filter.c>
@@ -31,7 +60,7 @@ AddType image/svg+xml svg svgz
                                       ... etc
     </IfModule>
 </IfModule>
-```
+~~~
 
 ## Implementation Options
 
@@ -78,15 +107,15 @@ AddType image/svg+xml svg svgz
 
 **HTML:**
 
-```
+~~~markup
 <div class="container">
     <svg … ></svg>
 </div>
-```
+~~~
 
 **CSS:**
 
-```
+~~~css
 .container {
   width: 50%;
   height: 0;
@@ -99,7 +128,7 @@ svg {
   top: 0;
   left: 0;
 }
-```
+~~~
 
 _**Note:** the svg does not need a height and width set to fit inside the container._
 
@@ -109,7 +138,7 @@ The following code:
 
 **HTML:**
 
-```
+~~~markup
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 194 186">
   <path id="curved_bg" fill="#195463" d="..." />
   <g id="primary_content" fill="#ECECEC">
@@ -125,11 +154,11 @@ The following code:
     <circle id="right-dot" cx="163.4" cy="91.5" r="3" />
   </g>
 </svg>
-```
+~~~
 
 **CSS:**
 
-```
+~~~css
 @media all and (max-width: 250px) {
   #curved_bg { 
     opacity: 0; 
@@ -148,7 +177,7 @@ The following code:
     opacity: 0;
   }
 }
-```
+~~~
 
 Produces the following result:
 
@@ -158,7 +187,7 @@ Produces the following result:
 
 Listen for media query events & change viewBox size, accordingly:
 
-```
+~~~js
 var shape = document.getElementById("svg");
 
 // media query event handler
@@ -178,7 +207,7 @@ function WidthChange(mq) {
     shape.setAttribute("enable-background", "0 490 500 500");
   }
 }
-```
+~~~
 
 
 
@@ -262,7 +291,7 @@ _**Note:** the `x`, `y`, `width` and `height` attributes cannot currently be set
 
 **HTML:**
 
-```
+~~~markup
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 65">
   <style type="text/css">
     <![CDATA[
@@ -273,38 +302,38 @@ _**Note:** the `x`, `y`, `width` and `height` attributes cannot currently be set
   <path class="secondb" d="M42 27v-20c0-3.7-3.3-7-7-7s-7 3.3-7 7v21l12 15-7 15.7c14.5 13.9 35 2.8 35-13.7 0-13.3-13.4-21.8-26-18zm6 25c-3.9 0-7-3.1-7-7s3.1-7 7-7 7 3.1 7 7-3.1 7-7 7z"/>
   <path class="firstb" d="M14 27v-20c0-3.7-3.3-7-7-7s-7 3.3-7 7v41c0 8.2 9.2 17 20 17s20-9.2 20-20c0-13.3-13.4-21.8-26-18zm6 25c-3.9 0-7-3.1-7-7s3.1-7 7-7 7 3.1 7 7-3.1 7-7 7z"/>
 </svg>
-```
+~~~
 
 Add to very start of SVG file before `<svg>` (without this, CSS Animations need to be inlined or embedded w/in `<svg>` tags):
 
-```
+~~~
 <?xml-stylesheet type="text/css" href="style.css"?>
-```
+~~~
 
 **CSS:**
 
-```
+~~~css
 .hover-animation .myElement { fill: #000; transition: fill 0.1s; }
 .hover-animation .myElement:hover { fill: #4e86b1; }
-```
+~~~
 
 **Hardware Acceleration**
 
 Use this SASS mixin to all elements we're animating to offload them to the GPU for hardware acceleration:
 
-```
+~~~css
 @mixin accelerate {
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000;
 }
-```
+~~~
 
 Now, we can add it to any element we're animating like this:
 
-```
+~~~css
 @include accelerate;
-```
+~~~
 
 **Animation Resources:**
 
@@ -315,70 +344,70 @@ Now, we can add it to any element we're animating like this:
 * [SvgJS](http://svgjs.com/)
 * [Animating SVG with GSAP](http://greensock.com/svg-tips)
 
-## Animation Deep Dive: GSAP & SVG Filters
+## Animation Deep Dive using [GSAP](http://greensock.com/gsap)
 
 **2D transforms w/ GSAP work exactly like they do on any other DOM element:**
 
 HTML:
 
-```
+~~~markup
 <g id="gear" transform="matrix(0.5, 0, 0, 0.5, 100, 0)">...</g>
-```
+~~~
 JS:
 
-```
+~~~js
 TweenLite.to("#gear", 1, {x:100, y:100, scale:0.5, rotation:180, skewX:45});
-```
+~~~
 
 **Set the transformOrigin (the point around which rotation and scaling occur) via %, keywords or pixel values:**
 
-```
+~~~js
 TweenLite.to("rect", 1, {rotation:360, transformOrigin:"50% 50%"}); //percents
 TweenLite.to("rect", 1, {rotation:360, transformOrigin:"center center"}); //keywords
 TweenLite.to("rect", 1, {rotation:360, transformOrigin:"50px 50px"}); //pixels
-```
+~~~
 
 **Note:** set `smoothOrigin:true` to remove unsightly jumps when the origin is transformed:
 
-```
+~~~js
 {rotation:"+=90", transformOrigin:"right top", smoothOrigin:true}
-```
+~~~
 
 **Transform SVG elements around any point in the SVG canvas**
 
-```
+~~~js
 TweenLite.to(svgElement, 1, {rotation:270, svgOrigin:"250 100"}); 
-```
+~~~
 
 **Animate SVG attributes like cx, cy, radius, width, etc.:**
 
 **HTML:**
 
-```
+~~~markup
 <rect id="rect" fill="none" x="0" y="0" width="500" height="400"></rect>
-```
+~~~
 
 **JS:**
 
-```
+~~~js
 TweenLite.to("#rect", 1, {attr:{x:100, y:50, width:100, height:100}, ease:Linear.easeNone});
-```
+~~~
 
 **Use percentage-based x/y transforms:**
 
 **Note:** percentage-based transforms are not accounted for in the SVG spec, but do work w/ GSAP
 
-```
+~~~js
 TweenLite.to(".box", 0.5, {x:"100%"})
-```
+~~~
 
 **Animate SVG Strokes**
 
 
-```
+~~~js
 // animate the logo strokes (note we use "102% as FireFox 34 miscalculates the length of a few strokes)
 TimelineLite.fromTo(".gray-line, .green-line, .green-line-thin", 3, {drawSVG:0}, {drawSVG:"102%"}, "-=1");
-```
+~~~
 
 [Comprehensive example on CodePen](http://codepen.io/GreenSock/pen/jEEoyw)
 
@@ -422,7 +451,7 @@ SVG filters can be infinitely compounded.
 
 A common example for a SVG filter is the blur effect with `<feGaussianBlur>`:
 
-```
+~~~markup
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="400">
 	<defs>
 		<filter id="blur" x="0" y="0">
@@ -431,7 +460,7 @@ A common example for a SVG filter is the blur effect with `<feGaussianBlur>`:
 	</defs>
 	<rect x="50" y="50" width="500" height="300" fill="#8d81ac" filter="url(#blur)" />  
 </svg>
-```
+~~~
 
 The above `in` attribute defines the input for the given filter primitive. Here we can use one of the following keywords:
 
@@ -444,7 +473,7 @@ The above `in` attribute defines the input for the given filter primitive. Here 
 
 The below `result` attribute gives us the possibility to make the result of a filter operation available as input to another filter using `in`. For our Gooey examples we will be using this. See below example of this:
 
-```
+~~~markup
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="400">
   <defs>
 	<filter id="dropshadow" x="0" y="0" width="200%" height="200%">
@@ -455,7 +484,7 @@ The below `result` attribute gives us the possibility to make the result of a fi
   </defs>
   <rect width="500" height="300" fill="#8d81ac" filter="url(#dropshadow)" />
 </svg>
-```
+~~~
 
 Resulting Image:
 
@@ -467,31 +496,31 @@ The concept here is that we first offset the element and then blur that offset �
 
 Applying SVG Filters to HTML elements is pretty straightforward. First, we define our filter somewhere in the HTML and then we can use it in our stylesheet as follows:
 
-```
+~~~css
 .filterClass {
 	-webkit-filter: url("#goo");
 	filter: url("../index.html#goo");
 }
-```
+~~~
 
 The reason why we define the path differently for the non-webkit property is Firefox and the way it references the filter.
 
 We can also add filter effects with JavaScript (Where `value` would be something like `url(#goo)`):
 
-```
+~~~js
 function setFilter(value){
 	$effectContainer.css({
 		webkitFilter: value,
 		filter: value,
 	});
 }
-```
+~~~
 
 **OMG Gooey Filter!**
 
 Define the filter inside an SVG object in our HTML:
 
-```
+~~~markup
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
   <defs>
     <filter id="goo">
@@ -501,18 +530,17 @@ Define the filter inside an SVG object in our HTML:
     </filter>
   </defs>
 </svg>
-```
+~~~
 
 Use the `filter` CSS property to apply the filter to the container of the elements we want to stick together:
 
-```
+~~~css
 .menu {
 	/* other styles */
-
 	-webkit-filter: url("#goo");
 	filter: url("../menu.html#goo");
 }
-```
+~~~
 
 Now, let’s break down the filter.
 
