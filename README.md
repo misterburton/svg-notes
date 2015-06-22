@@ -109,7 +109,7 @@ AddType image/svg+xml svg svgz
 
 **HTML:**
 
-~~~markup
+~~~html
 <div class="container">
     <svg … ></svg>
 </div>
@@ -140,7 +140,7 @@ The following code:
 
 **HTML:**
 
-~~~markup
+~~~html
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 194 186">
   <path id="curved_bg" fill="#195463" d="..." />
   <g id="primary_content" fill="#ECECEC">
@@ -293,7 +293,7 @@ _**Note:** the `x`, `y`, `width` and `height` attributes cannot currently be set
 
 **HTML:**
 
-~~~markup
+~~~html
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 65">
   <style type="text/css">
     <![CDATA[
@@ -354,7 +354,7 @@ _For those unfamiliar with the GreenSock Animation Platform, check out their [Ge
 
 The HTML way:
 
-~~~markup
+~~~html
 <g id="gear" transform="matrix(0.5, 0, 0, 0.5, 100, 0)">...</g>
 ~~~
 
@@ -388,7 +388,7 @@ Animate SVG attributes like cx, cy, radius, width, etc.:
 
 **HTML:**
 
-~~~markup
+~~~html
 <rect id="rect" fill="none" x="0" y="0" width="500" height="400"></rect>
 ~~~
 
@@ -456,7 +456,7 @@ SVG filters can be infinitely compounded.
 
 A common example for a SVG filter is the blur effect with `<feGaussianBlur>`:
 
-~~~markup
+~~~html
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="400">
 	<defs>
 		<filter id="blur" x="0" y="0">
@@ -478,7 +478,7 @@ The above `in` attribute defines the input for the given filter primitive. Here 
 
 The below `result` attribute gives us the possibility to make the result of a filter operation available as input to another filter using `in`. For our Gooey examples we will be using this. See below example of this:
 
-~~~markup
+~~~html
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="400">
   <defs>
 	<filter id="dropshadow" x="0" y="0" width="200%" height="200%">
@@ -525,7 +525,7 @@ function setFilter(value){
 
 Define the filter inside an SVG object in our HTML:
 
-~~~markup
+~~~html
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
   <defs>
     <filter id="goo">
