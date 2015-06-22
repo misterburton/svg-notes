@@ -1,32 +1,34 @@
 # SVG Notes
 
+#### Table of Contents:
+
 <ul class="toc">
   <li>
-    <a href="#toc_1">Preparing</a>
+    <a href="#preparing">Preparing</a>
   </li>
   <li>
-    <a href="#toc_2">Optimizing</a>
+    <a href="#optimizing">Optimizing</a>
   </li>
   <li>
-    <a href="#toc_3">Implementation Options</a>
+    <a href="#implementation-options">Implementation Options</a>
   </li>
   <li>
-    <a href="#toc_4">Responsive SVG</a>
+    <a href="#responsive-svg">Responsive SVG</a>
   </li>
   <li>
-    <a href="#toc_5">Styling</a>
+    <a href="#styling">Styling</a>
   </li>
   <li>
-    <a href="#toc_6">Animation Basics</a>
+    <a href="#animation-basics">Animation Basics</a>
   </li>
   <li>
-    <a href="#toc_7">Animation Deep Dive using GSAP</a>
+    <a href="#animation-deep-dive-using-gsap">Animation Deep Dive using GSAP</a>
   </li>
   <li>
-    <a href="#toc_8">SVG Filters & Gooey Effects</a>
+    <a href="#svg-filters--gooey-effects">SVG Filters & Gooey Effects</a>
   </li>
   <li>
-    <a href="#toc_9">References</a>
+    <a href="#references">References</a>
   </li>
 </ul>
 
@@ -69,7 +71,7 @@ AddType image/svg+xml svg svgz
 3. Inline in the HTML, i.e. `<svg viewBox="0 0 68 65"> <path d="…` saves an HTTP request, but the SVG file is not cached by the browser.
 
 
-**Implementation Overview:**
+**Overview:**
 
 |_Approaches:_                   | `<object>`  | Inline | `<img>`     | `background-image` |
 |:------------------------------|-------------|--------|-------------|--------------------|
@@ -344,22 +346,25 @@ Now, we can add it to any element we're animating like this:
 * [SvgJS](http://svgjs.com/)
 * [Animating SVG with GSAP](http://greensock.com/svg-tips)
 
-## Animation Deep Dive using [GSAP](http://greensock.com/gsap)
+## Animation Deep Dive using GSAP
 
-**2D transforms w/ GSAP work exactly like they do on any other DOM element:**
+_For those unfamiliar with the GreenSock Animation Platform, check out their [Getting Started with GSAP](http://greensock.com/gsap) page._
 
-HTML:
+2D transforms w/ GSAP work exactly like they do on any other DOM element. For Example:
+
+The HTML way:
 
 ~~~markup
 <g id="gear" transform="matrix(0.5, 0, 0, 0.5, 100, 0)">...</g>
 ~~~
-JS:
+
+The GSAP.js way:
 
 ~~~js
 TweenLite.to("#gear", 1, {x:100, y:100, scale:0.5, rotation:180, skewX:45});
 ~~~
 
-**Set the transformOrigin (the point around which rotation and scaling occur) via %, keywords or pixel values:**
+Set the transformOrigin (the point around which rotation and scaling occur) via %, keywords or pixel values:
 
 ~~~js
 TweenLite.to("rect", 1, {rotation:360, transformOrigin:"50% 50%"}); //percents
@@ -373,13 +378,13 @@ TweenLite.to("rect", 1, {rotation:360, transformOrigin:"50px 50px"}); //pixels
 {rotation:"+=90", transformOrigin:"right top", smoothOrigin:true}
 ~~~
 
-**Transform SVG elements around any point in the SVG canvas**
+Transform SVG elements around any point in the SVG canvas:
 
 ~~~js
 TweenLite.to(svgElement, 1, {rotation:270, svgOrigin:"250 100"}); 
 ~~~
 
-**Animate SVG attributes like cx, cy, radius, width, etc.:**
+Animate SVG attributes like cx, cy, radius, width, etc.:
 
 **HTML:**
 
@@ -393,7 +398,7 @@ TweenLite.to(svgElement, 1, {rotation:270, svgOrigin:"250 100"});
 TweenLite.to("#rect", 1, {attr:{x:100, y:50, width:100, height:100}, ease:Linear.easeNone});
 ~~~
 
-**Use percentage-based x/y transforms:**
+Use percentage-based x/y transforms:
 
 **Note:** percentage-based transforms are not accounted for in the SVG spec, but do work w/ GSAP
 
@@ -401,7 +406,7 @@ TweenLite.to("#rect", 1, {attr:{x:100, y:50, width:100, height:100}, ease:Linear
 TweenLite.to(".box", 0.5, {x:"100%"})
 ~~~
 
-**Animate SVG Strokes**
+Animate SVG Strokes:
 
 
 ~~~js
