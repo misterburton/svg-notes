@@ -76,7 +76,7 @@ AddType image/svg+xml svg svgz
 * Its four values are `x`, `y`, `width`, `height`
 * By default, it will not be stretched or distorted if you give it dimensions that don't match the aspect ratio
 * The `preserveAspectRatio` property describes how the image should scale if the aspect ratio of the viewBox doesn't match the aspect ratio of the viewport
-* Default value is `preserveAspectRatio="xMidYMid meet"`
+ * Default value is `preserveAspectRatio="xMidYMid meet"`
  * `xMidYMid` centers the scaled viewBox region w/in the available viewport region, in both x/y directions. You can replace `Mid` with `Min` or `Max` to align the graphic flush against one side or the other
  * `meet` tells the browser to scale the graphic until it just fits both height and width. (a la `background-size: fit`) Alternative value is `slice` (equivalent to `background-size: cover`)
  * `preserveAspectRatio="none"` allows you to manually scale your SVG, just as you would a raster image.
