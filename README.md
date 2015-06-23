@@ -68,7 +68,18 @@ AddType image/svg+xml svg svgz
 
 1. `<img src="myFile.svg"…` or `background-image: url(myFile.svg);` should be used only for static SVG files. manipulation is not possible via either of these means.
 2. `<object type="image/svg+xml" data="myFile.svg">Your browser does not support SVGs</object>` does allow for image manipulation
-3. Inline in the HTML, i.e. `<svg viewBox="0 0 68 65"> <path d="…` saves an HTTP request, but the SVG file is not cached by the browser.
+3. Inline in the HTML, i.e. `<svg viewBox="0 0 68 65"> <path d="…/>` saves an HTTP request, but the SVG file is not cached by the browser.
+
+**Understanding the `viewBox` Attribute**:
+
+* Defines aspect ratio, scale & origin of the SVG's coordinate system
+* Its four values are `x`, `y`, `width`, `height`
+* By default, it will not be stretched or distorted if you give it dimensions that don't match the aspect ratio
+* The `preserveAspectRatio` property describes how the image should scale if the aspect ratio of the viewBox doesn't match the aspect ratio of the viewport
+* Default value is `preserveAspectRatio="xMidYMid meet"`
+ * `xMidYMid` centers the scaled viewBox region w/in the available viewport region, in both x/y directions. You can replace `Mid` with `Min` or `Max` to align the graphic flush against one side or the other
+ * `meet` tells the browser to scale the graphic until it just fits both height and width. (a la `background-size: fit`) Alternative value is `slice` (equivalent to `background-size: cover`)
+ * `preserveAspectRatio="none"` allows you to manually scale your SVG, just as you would a raster image.
 
 
 **Overview:**
@@ -569,6 +580,7 @@ Notes compiled from the following excellent resources:
 
 * [SVG On the Web - A Practical Guide](https://svgontheweb.com/)
 * [Making SVGs Responsive with CSS](http://tympanus.net/codrops/2014/08/19/making-svgs-responsive-with-css/)
+* [How to Scale SVG](https://css-tricks.com/scale-svg/)
 * [Animating SVG with GSAP](http://greensock.com/svg-tips)
 * [A Few Different Ways To Use SVG Sprites In Animation](http://www.smashingmagazine.com/2015/03/17/different-ways-to-use-svg-sprites-in-animation/)
 * [Styling & Animating Scalable Vector Graphics with CSS](http://slides.com/sarasoueidan/styling-animating-svgs-with-css/)
