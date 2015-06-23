@@ -1,4 +1,4 @@
-# SVG Notes
+# SVG on the Web: Notes & Best Practices
 
 ##### Table of Contents:
 
